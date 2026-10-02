@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marquis Los Cabos - Reservaciones</title>
+</head>
+<body>
+    <header>
+        <h1>Reservaciones</h1>
+        <p>Planea tu próxima escapada a Los Cabos</p>
+    </header>
+
+    <nav>
+                <a href="inicio.html">Inicio</a> |
+                <a href="habitaciones.html">Habitaciones</a> |
+                <a href="detalles.html">Detalles</a> |
+                <a href="Nosotros.html">Historia del hotel</a> |  
+                <a href="Servicios.html">Servicios</a> |
+                <a href="Reservaciones.html">Reservaciones</a> |
+                <a href="Galeria.html">Galería</a> |
+                <a href="Contacto.html">Contacto</a> |
+            </nav>
+
+    <main>
+        <section>
+            <h2>Solicita información de tu estancia</h2>
+            <p>
+                Completa este formulario para indicar tus
+                 preferencias de alojamiento en Marquis Los Cabos
+                 Resort & Spa. para confirmar su reservación.
+            </p>
+
+            <form action="#" method="get">
+
+                <fieldset>
+                    <legend>Datos personales</legend>
+
+                    <label for="nombre">Nombre completo:</label><br>
+                    <input type="text" id="nombre" name="nombre"
+                    placeholder="tu nombre completo"
+                    minlength="5" maxlength="50"
+                    required>
+                <br><br>
+
+                <label for="usuario">Nombre de usuario:</label><br>
+                <input type="text" id="nombre" name="nombre"
+                    placeholder="De 5 a 15 caracteres"
+                    minlength="5" maxlength="15"
+                    required>
+                <br><br>
+
+                <label for="email">correo electrónico :</label><br>
+                <input type="email" id="email" name="email"
+                    placeholder="correo@ejemplo.com"
+                    required>
+                <br><br>
+
+                <label for="telefono">Teléfono:</label><br>
+                    <input type="tel" id="telefono" name="telefono"
+                           placeholder="Ingresa 10 dígitos"
+                           pattern="[0-9]{10}"
+                           minlength="10" maxlength="10"
+                           title="Ingresa exactamente 10 números"
+                           required>
+                    <br><br>
+
+                    <label for="idusuario">ID de usuario:</label><br>
+                    <input type="text" id="idusuario" name="idusuario"
+                           value="Se asignará al confirmar"
+                           disabled>
+                    <br><br>
+                </fieldset>
+
+                <br>
+
+                <fieldset>
+                    <legend>Datos de la estancia</legend>
+                    
+                    <label for="entrada">Fecha de llegada:</label><br>
+                    <input type="date" id="entrada" name="entrada"
+                           required>
+                    <br><br>
+
+                    <label for="salida">Fecha de salida:</label><br>
+                    <input type="date" id="salida" name="salida"
+                           required>
+                    <br><br>
+
+                    <label for="adultos">Número de adultos:</label><br>
+                    <input type="number" id="adultos" name="adultos"
+                           min="1" max="20" value="2"
+                           required>
+                    <br><br>
+
+                    <label for="suite">Categoría de suite:</label><br>
+                    <select id="suite" name="suite" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="junior-ocean-view">
+                            Junior Suite Ocean View
+                        </option>
+                        <option value="junior-ocean-front">
+                            Junior Suite Ocean Front
+                        </option>
+                        <option value="eden-view">
+                            Junior Suite Edén View
+                        </option>
+                        <option value="master">
+                            Master Suite
+                        </option>
+                        <option value="presidential">
+                            Marquis Presidential Suite
+                        </option>
+                    </select>
+                    <br><br>
+
+                    <label for="solicitudes">
+                        Solicitudes especiales:
+                    </label><br>
+                    <textarea id="solicitudes" name="solicitudes"
+                              rows="5" cols="40"
+                              placeholder="Escribe tus preferencias">
+                    </textarea>
+                    <br><br>
+                </fieldset>
+
+                <br>
+
+                <fieldset>
+                    <legend>Confirmación</legend>
+
+                    <input type="checkbox" id="confirmar"
+                           name="confirmar" required>
+                    <label for="confirmar">
+                        Confirmo que los datos ingresados son correctos.
+                    </label>
+                    <br><br>
+                </fieldset>
+
+                <br>
+
+                <button type="submit">
+                    Enviar solicitud de demostración
+                </button>
+
+                <button type="reset">
+                    Limpiar formulario
+                </button>
+
+            </form>
+        </section>
+
+        <section>
+            <h2>Reserva directamente con el hotel</h2>
+            <p>
+                Consulta las tarifas, promociones y disponibilidad
+                actual en el sitio oficial.
+            </p>
+
+            <p>
+                <a href="https://www.marquisloscabos.com/suites/junior-suite-ocean-view-double"
+               target="_blank"
+               rel="noopener noreferrer">
+               Visitar Marquis Los Cabos Resort & Spa 
+                </a>
+            </p>
+
+            <p>
+                Teléfono de reservaciones:
+                55 5229 1205
+            </p>
+
+            <p>
+                Correo de reservaciones:
+                <a href="reservaciones@marquishotels.com"> 
+
+                </a>
+            </p>
+              
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+
+    <footer>
+            <p>Marquis Los Cabos Resort & Spa.</p>
+            <p>Carretera transpeninsular km 21.5,
+                Fraccionamiento Cabo Real,
+                San José del Cabo, B.C.S., México. 23400</p>
+            <p>&copy; 2026 Evaluación 3ra unidad</p>
+            <p><a href="Contacto.html">Contacto</a></p>
+           <p>Teléfono: MX:+52(800) 690 0102</p>
+            <p>Teléfono: US:+1(877) 238 9399</p>
+            <p><a href="Correo.html">Correo Electrónico</a></p>
+            <p>correo: reservaciones@marquishotels.com</p>
+        </footer>
+
+</body>
+</html>
