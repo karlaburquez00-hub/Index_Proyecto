@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Registro</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.contenedor{
+    width:900px;
+    max-width:95%;
+    background:#3f6df6;
+    border-radius:15px;
+    display:flex;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.formulario{
+    width:45%;
+    background:white;
+    padding:35px;
+}
+
+.formulario h2{
+    margin-bottom:20px;
+    color:#333;
+}
+
+.campo{
+    margin-bottom:15px;
+}
+
+.campo label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:600;
+    color:#444;
+}
+
+.campo input,
+.campo select,
+.campo textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+    transition:.3s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus{
+    border-color:#3f6df6;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+.contador{
+    text-align:right;
+    color:#666;
+    font-size:13px;
+    margin-top:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#3f6df6;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#3159d8;
+}
+
+.lado-derecho{
+    width:55%;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+.lado-derecho h1{
+    font-size:55px;
+    line-height:1.2;
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <div class="formulario">
+        <h2>Registro</h2>
+
+        <form>
+
+            <div class="campo">
+                <label>Nombre(s)</label>
+                <input type="text"
+                       onkeypress="return soloLetras(event)">
+            </div>
+
+            <div class="campo">
+                <label>Apellido(s)</label>
+                <input type="text"
+                       onkeypress="return soloLetras(event)">
+            </div>
+
+            <div class="campo">
+                <label>Teléfono</label>
+                <input type="text"
+                       maxlength="10"
+                       onkeypress="return soloNumeros(event)">
+            </div>
+
+            <div class="campo">
+                <label>Correo electrónico</label>
+                <input type="email"
+                       onkeypress="return correoValido(event)">
+            </div>
+
+            <div class="campo">
+                <label>Género</label>
+                <select>
+                    <option>Seleccione...</option>
+                    <option>Femenino</option>
+                    <option>Masculino</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Biografía</label>
+
+                <textarea id="bio"
+                    onkeyup="contarCaracteres()"></textarea>
+
+                <div class="contador">
+                    Caracteres: <span id="contador">0</span>
+                </div>
+            </div>
+
+            <button type="submit">
+                Guardar cambios
+            </button>
+
+        </form>
+    </div>
+
+    <div class="lado-derecho">
+        <h1>Formulario<br>de Registro</h1>
+    </div>
+
+</div>
+
+<script>
+
+// SOLO LETRAS Y ESPACIOS
+function soloLetras(e){
+    let tecla = String.fromCharCode(e.which);
+
+    let patron = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+
+    if(!patron.test(tecla)){
+        e.preventDefault();
+        return false;
+    }
+}
+
+// SOLO NÚMEROS
+function soloNumeros(e){
+    let tecla = String.fromCharCode(e.which);
+
+    let patron = /^[0-9]+$/;
+
+    if(!patron.test(tecla)){
+        e.preventDefault();
+        return false;
+    }
+}
+
+// CORREO (NO PERMITE ESPACIOS)
+function correoValido(e){
+    let tecla = String.fromCharCode(e.which);
+
+    if(tecla === " "){
+        e.preventDefault();
+        return false;
+    }
+}
+
+// CONTADOR DE CARACTERES
+function contarCaracteres(){
+    let texto = document.getElementById("bio").value;
+    document.getElementById("contador").textContent =
+    texto.length;
+}
+
+</script>
+
+</body>
+</html>
