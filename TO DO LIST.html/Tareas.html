@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                #ffda65 0%,
+                #ffda65 50%,
+                #568df5 50%,
+                #568df5 100%
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #f1f8fc;
+            width: 100%;
+            max-width: 520px;
+            min-height: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #26364a;
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .input-area input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            border: none;
+            border-bottom: 2px solid #b8c5d1;
+            background: transparent;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-area input:focus {
+            border-color: #568df5;
+        }
+
+        .input-area button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #568df5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #3974dc;
+        }
+
+        .contador {
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        #pendientes {
+            color: #3974dc;
+            font-weight: bold;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 13px;
+            margin-bottom: 15px;
+            border-radius: 9px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-info input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #568df5;
+            flex-shrink: 0;
+        }
+
+        .task-info span {
+            font-size: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .task.completed span {
+            text-decoration: line-through;
+            color: #999;
+            font-style: italic;
+        }
+
+        .delete-btn {
+            background: #f15b63;
+            color: white;
+            border: none;
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #d83d48;
+        }
+
+        .empty {
+            text-align: center;
+            color: #8995a3;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .input-area button {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Mi Lista de Tareas</h1>
+
+        <div class="input-area">
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Escribe una nueva tarea..."
+            >
+
+            <button onclick="addTask()">Agregar</button>
+        </div>
+
+        <p class="contador">
+            Tienes <span id="pendientes">0</span>
+            tarea(s) pendiente(s)
+        </p>
+
+        <ul class="task-list" id="taskList"></ul>
+
+    </div>
+
+    <script>
+
+        // Recuperar las tareas guardadas
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+        // Mostrar las tareas en pantalla
+        function showTasks() {
+
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+
+                const li = document.createElement("li");
+                li.className = "task";
+
+                if (task.completed) {
+                    li.classList.add("completed");
+                }
+
+                const info = document.createElement("div");
+                info.className = "task-info";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = task.completed;
+
+                checkbox.addEventListener("change", () => {
+                    toggleTask(index);
+                });
+
+                const span = document.createElement("span");
+                span.textContent = task.text;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "🗑";
+                deleteButton.className = "delete-btn";
+
+                deleteButton.addEventListener("click", () => {
+                    deleteTask(index);
+                });
+
+                info.appendChild(checkbox);
+                info.appendChild(span);
+
+                li.appendChild(info);
+                li.appendChild(deleteButton);
+
+                taskList.appendChild(li);
+
+            });
+
+            updateCounter();
+        }
+
+        // Agregar una nueva tarea
+        function addTask() {
+
+            const input = document.getElementById("taskInput");
+            const text = input.value.trim();
+
+            if (text === "") {
+                alert("Por favor, escribe una tarea.");
+                return;
+            }
+
+            tasks.push({
+                text: text,
+                completed: false
+            });
+
+            saveTasks();
+
+            input.value = "";
+            input.focus();
+
+        }
+
+        // Marcar tarea como completada
+        function toggleTask(index) {
+
+            tasks[index].completed = !tasks[index].completed;
+
+            saveTasks();
+
+        }
+
+        // Eliminar una tarea
+        function deleteTask(index) {
+
+            tasks.splice(index, 1);
+
+            saveTasks();
+
+        }
+
+        // Guardar tareas en Local Storage
+        function saveTasks() {
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            showTasks();
+
+        }
+
+        // Actualizar contador de tareas pendientes
+        function updateCounter() {
+
+            const pendientes = tasks.filter(
+                task => !task.completed
+            ).length;
+
+            document.getElementById("pendientes").textContent = pendientes;
+
+        }
+
+        // Permitir agregar tareas presionando Enter
+        document.getElementById("taskInput").addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                addTask();
+            }
+
+        });
+
+        // Mostrar las tareas al abrir la página
+        showTasks();
+
+    </script>
+
+</body>
+</html>
+
+
